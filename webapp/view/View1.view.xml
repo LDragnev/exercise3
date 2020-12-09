@@ -1,0 +1,50 @@
+<mvc:View controllerName="com.kpmg.exercise3.controller.View1" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns="sap.m">
+	<Table id="idProductsTable" inset="false" items="{ path: 'productsModel>/ProductCollection' }">
+		<headerToolbar>
+			<Toolbar>
+				<Title text="{i18n>productsList}"/>
+				<ToolbarSpacer/>
+				<SearchField width="50%" search=".onFilter"/>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column hAlign="End" minScreenWidth="Desktop" demandPopin="true" width="6em">
+				<Text text="{i18n>cQuantity}"/>
+			</Column>
+			<Column minScreenWidth="Desktop" demandPopin="true">
+				<Text text="{i18n>cName}"/>
+			</Column>
+			<Column minScreenWidth="Desktop" demandPopin="true">
+				<Text text="{i18n>cStatus}"/>
+			</Column>
+			<Column minScreenWidth="Desktop" demandPopin="true">
+				<Text text="{i18n>cSupplier}"/>
+			</Column>
+			<Column minScreenWidth="Desktop" demandPopin="true">
+				<Text text="{i18n>cCategory}"/>
+			</Column>
+			<Column hAlign="End" minScreenWidth="Desktop" demandPopin="true">
+				<Text text="{i18n>cPrice}"/>
+			</Column>
+			<Column hAlign="End">
+				<Text text="{i18n>cSum}"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem press=".onPress">
+				<cells>
+					<ObjectNumber number="{productsModel>Quantity}" emphasized="false"/>
+					<ObjectIdentifier title="{productsModel>Name}"/>
+					<Text text="{ path: 'productsModel>Status', formatter: '.formatter.statusText' }"/>
+					<Text text="{productsModel>SupplierName}"/>
+					<Text text="{productsModel>Category}"/>
+					<ObjectNumber
+						number="{ parts: [{path: 'productsModel>Price'}, {path: 'productsModel>/CurrencyCode'}], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false } }"
+						unit="{productsModel>/CurrencyCode}"/>
+					<ObjectNumber number="{= Number(${productsModel>Quantity} * ${productsModel>Price}).toFixed(2)}" emphasized="false"
+						state="{= ${productsModel>Price} > 100 ? 'Success' : 'Error' }"/>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</mvc:View>
